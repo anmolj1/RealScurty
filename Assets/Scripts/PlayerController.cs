@@ -12,6 +12,15 @@ public class PlayerController : MonoBehaviour {
 
 	private bool attack;
 
+	public Transform[] groundPoints;
+	public float groundRadius;
+	public LayerMask whatIsGround;
+	private bool isGrounded;
+	private bool jump;
+	public float jumpForce;
+
+	public bool airControl;
+
 	// Use this for initialization
 	void Start () {
 		facingRight = true;
@@ -25,16 +34,30 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		float horizontal = Input.GetAxis("Horizontal");
+		isGrounded = IsGrounded();
 		MovePlayer(horizontal);
-		Attack();
+
 		Flip(horizontal);	
+		Attack();
+		HandleLayers();
+
 		reset();
 	}
 
 	private void MovePlayer(float horizontal){
-		if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")){
+
+		if (myRigidbody.velocity.y < 0) {
+			myAnimator.SetBool("land",true);
+		}
+		if 	(!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack") && (isGrounded || airControl)){
 		myRigidbody.velocity = new Vector2(horizontal * playerSpeed, myRigidbody.velocity.y);
-	}
+		}
+
+		if(isGrounded && jump){
+			isGrounded = false;
+			myRigidbody.AddForce(new Vector2(0,jumpForce));
+			myAnimator.SetTrigger("jump");
+		}
 		myAnimator.SetFloat("speed",Mathf.Abs(horizontal));
 	}
 
@@ -46,6 +69,10 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void HandInput(){
+
+		if (Input.GetKeyDown(KeyCode.Space)){
+			jump = true;
+		}
 
 		if (Input.GetKeyDown(KeyCode.LeftShift)){
 			attack = true;
@@ -63,5 +90,31 @@ public class PlayerController : MonoBehaviour {
 
 	private void reset(){
 		attack =false;
+		jump = false;
+	}
+
+	private bool IsGrounded(){
+		if (myRigidbody.velocity.y <= 0){
+			foreach (Transform point in groundPoints){
+				Collider2D[] colliders = Physics2D.OverlapCircleAll(point.position, groundRadius, whatIsGround);
+
+				for (int i =0; i < colliders.Length; i++){
+					if( colliders[i].gameObject != gameObject){
+						myAnimator.ResetTrigger("jump");
+						myAnimator.SetBool("land", false);
+						return true;
+					}
+				}
+			}
+		} return false;
+	}
+
+	private void HandleLayers(){
+		if(!isGrounded){
+			myAnimator.SetLayerWeight(1,1);
+		}
+		else{
+			myAnimator.SetLayerWeight(1,0);
+		}
 	}
 }
