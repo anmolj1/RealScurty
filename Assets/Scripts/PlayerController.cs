@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Attack(){
-		if (attack && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")){
+		if (attack && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack") && !jump){
 			myAnimator.SetTrigger("attack");
 			myRigidbody.velocity = Vector2.zero;
 		}
