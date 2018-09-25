@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,14 +55,14 @@ public class PlayerController : MonoBehaviour {
 
 		if(isGrounded && jump){
 			isGrounded = false;
-			myRigidbody.AddForce(new Vector2(0,jumpForce));
+			myRigidbody.AddForce(new Vector3(0,jumpForce,0), ForceMode2D.Impulse);
 			myAnimator.SetTrigger("jump");
 		}
 		myAnimator.SetFloat("speed",Mathf.Abs(horizontal));
 	}
 
 	private void Attack(){
-		if (attack && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack") && !jump){
+		if (attack && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")){
 			myAnimator.SetTrigger("attack");
 			myRigidbody.velocity = Vector2.zero;
 		}
