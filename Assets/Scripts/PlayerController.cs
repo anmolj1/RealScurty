@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 			myAnimator.SetBool("land",true);
 		}
 		if 	(!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack") && (isGrounded || airControl)){
-		myRigidbody.velocity = new Vector2(horizontal * playerSpeed, myRigidbody.velocity.y);
+		myRigidbody.velocity = new Vector2(horizontal * playerSpeed , myRigidbody.velocity.y);
 		}
 
 		if(isGrounded && jump){
