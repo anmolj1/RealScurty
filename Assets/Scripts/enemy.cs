@@ -15,7 +15,6 @@ public class enemy : MonoBehaviour {
         if (Health  != null)
         {
             Health.TakeDamage(10);
-            print(PlayerController.singleton.myAnimator.GetCurrentAnimatorStateInfo(0));
 
          }
     
