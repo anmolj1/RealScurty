@@ -320,7 +320,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: eafd36ba2a24153469a7db72c6551184, type: 2}
-  m_Tag: 
+  m_Tag: idle
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -347,7 +347,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: bba8d22e30518f14e9331afb2f13bb6e, type: 2}
-  m_Tag: 
+  m_Tag: walking
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 

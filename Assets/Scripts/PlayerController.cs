@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public float playerSpeed;
 	private bool facingRight;
 
-	public Animator myAnimator;
+	public  Animator myAnimator;
 
 	private bool attack;
 
@@ -21,9 +21,12 @@ public class PlayerController : MonoBehaviour {
 
 	public bool airControl;
 
+	public static PlayerController singleton;
+
 	// Use this for initialization
 	void Start () {
 		facingRight = true;
+		singleton = this;
 		
 	}
 
